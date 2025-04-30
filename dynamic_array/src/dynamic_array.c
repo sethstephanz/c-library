@@ -46,16 +46,16 @@ void print_array(DynamicArray *arr) {
     printf("\n");
 }
 
-void append(DynamicArray *arr, int el) {
+void append(DynamicArray *arr, int val) {
     if (arr->size >= arr->length) {
         resize_array(arr);
     }
 
     // add element and increase size
-    arr->data[arr->size++] = el;
+    arr->data[arr->size++] = val;
 }
 
-void insert(DynamicArray *arr, int el, int idx) {
+void insert(DynamicArray *arr, int val, int idx) {
     if (arr->size == arr->length) {
         resize_array(arr);
     }
@@ -67,7 +67,7 @@ void insert(DynamicArray *arr, int el, int idx) {
         }
 
         // insert el at idx
-        arr->data[idx] = el;
+        arr->data[idx] = val;
         arr->size++;
     } else {
         printf("Insert: Invalid index\n");
@@ -85,9 +85,9 @@ void delete(DynamicArray *arr, int idx) {
     }
 }
 
-int search(DynamicArray *arr, int el) {
+int search(DynamicArray *arr, int val) {
     for (int i = 0; i < arr->size; i++) {
-        if (arr->data[i] == el) {
+        if (arr->data[i] == val) {
             return i;
         }
     }
@@ -111,20 +111,22 @@ void set(DynamicArray *arr, int idx, int val) {
     }
 }
 
-float avg(DynamicArray *arr) {
+int avg(DynamicArray *arr, float *res) {
     if (arr->size == 0) {
-        printf("Avg: No elements in array\n");
-        return 0.0;
+        fprintf(stderr, "Avg: No elements in array\n");
+        return -1;
     }
+
     int sum = 0;
     for (int i = 0; i < arr->size; i++) {
         sum += arr->data[i];
     }
-    float avg = sum / arr->size;
-    return avg;
+
+    *res = (float)sum / arr->size;
+    return 0;
 }
 
-int max(DynamicArray *arr) {
+int max(DynamicArray *arr, int *res) {
     if (arr->size == 0) {
         printf("Max: No elements in array\n");
         return -1;
@@ -136,10 +138,12 @@ int max(DynamicArray *arr) {
             max = arr->data[i];
         }
     }
-    return max;
+
+    *res = max;
+    return 0;
 }
 
-int min(DynamicArray *arr) {
+int min(DynamicArray *arr, int *res) {
     if (arr->size == 0) {
         printf("Min: No elements in array\n");
         return -1;
@@ -151,12 +155,14 @@ int min(DynamicArray *arr) {
             min = arr->data[i];
         }
     }
-    return min;
+
+    *res = min;
+    return 0;
 }
 
-int sum(DynamicArray *arr) {
+int sum(DynamicArray *arr, int *res) {
     if (arr->size == 0) {
-        printf("Sum: No elements in array\n");
+        printf("sum: No elements in array\n");
         return -1;
     }
 
@@ -164,7 +170,9 @@ int sum(DynamicArray *arr) {
     for (int i = 1; i < arr->size; i++) {
         sum += arr->data[i];
     }
-    return sum;
+
+    *res = sum;
+    return 0;
 }
 
 void reverse(DynamicArray *arr) {
@@ -182,6 +190,7 @@ void reverse(DynamicArray *arr) {
 void shift_left(DynamicArray *arr) {
     // shift arr left. leftmost value will be lost. backfill with 0s
     if (!arr) {
+        fprintf(stderr, "shift_left: No array\n");
         return;
     }
     for (int i = arr->size; i > -1; i--) {
@@ -193,6 +202,7 @@ void shift_left(DynamicArray *arr) {
 void rotate_left(DynamicArray *arr) {
     // rotate array left. backfill with leftmost value
     if (!arr) {
+        fprintf(stderr, "rotate_left: No array\n");
         return;
     }
     int temp = arr->data[arr->size - 1];
@@ -206,6 +216,7 @@ void rotate_left(DynamicArray *arr) {
 void shift_right(DynamicArray *arr) {
     // shift arr right. rightmost value will be lost. backfill with 0s
     if (!arr) {
+        fprintf(stderr, "shift_right: No array\n");
         return;
     }
     for (int i = 0; i < arr->size; i++) {
@@ -216,6 +227,7 @@ void shift_right(DynamicArray *arr) {
 
 void rotate_right(DynamicArray *arr) {
     if (!arr) {
+        fprintf(stderr, "rotate_right: No array\n");
         return;
     }
     int temp = arr->data[0];
