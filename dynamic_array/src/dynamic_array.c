@@ -7,14 +7,13 @@
 DynamicArray *create_array(int initial_length) {
     DynamicArray *arr = (DynamicArray *)malloc(sizeof(DynamicArray));
     if (!arr) {
-        perror("Failed to allocate memory for array");
-        free(arr);
+        fprintf(stderr, "Failed to allocate memory for array");
         exit(EXIT_FAILURE);
     }
 
     arr->data = (int *)malloc(initial_length * sizeof(int)); // this cast is unecessary in C, but is in C++
     if (!arr->data) {
-        perror("Failed to allocate memory for data");
+        fprintf(stderr, "Failed to allocate memory for data");
         free(arr);
         exit(EXIT_FAILURE);
     }

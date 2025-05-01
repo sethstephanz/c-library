@@ -1,26 +1,54 @@
+#include "strings.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// Note: these string methods will modify the string directly.
+// Note: Most of these string methods will modify the string directly.
 // Create a copy if need to keep original!
 
 // 'a' - 'z' = 97 - 122
 // 'A' - 'Z' = 65 - 90
 
-size_t len(char *str) {
-    if (!str)
-        return (size_t)-1;
-
-    size_t s = 0;
-    while (str[s] != '\0') {
-        s++;
+String *create_string(int str_length) {
+    if (str_length >= MAX_STR_LEN) { // too large or no room for null terminator
+        fprintf(stderr, "Max string length is 10000 characters\n");
+        exit(EXIT_FAILURE);
     }
-    return s;
+    String *str = (String *)malloc(sizeof(String));
+    if (!str) {
+        fprintf(stderr, "Failed to allocate memory for string\n");
+        exit(EXIT_FAILURE);
+    }
+
+    str->data = (char *)malloc(str_length * sizeof(char)); // this cast is unecessary in C, but is in C++
+    if (!str->data) {
+        perror("Failed to allocate memory for data\n");
+        free(str);
+        exit(EXIT_FAILURE);
+    }
+    str->size = 0;
+    str->length = str_length;
+    return str;
 }
 
-void lower(char *str) {
+void free_string(String *str) {
+    free(str->data);
+    free(str);
+}
+
+void print_string(String *str) {
+    printf("Array (size: %d, length: %d): ", str->size, str->length);
+    for (int i = 0; i < str->size; i++) {
+        printf("%d ", str->data[i]);
+    }
+    printf("\n");
+}
+
+int lower(char *str) {
+    if (!str) {
+        return -1;
+    }
     size_t s = 0;
     while (str[s] != '\0') {
         int ascii = (int)str[s];
@@ -29,9 +57,13 @@ void lower(char *str) {
         }
         s++;
     }
+    return 0;
 }
 
-void upper(char *str) {
+int upper(char *str) {
+    if (!str) {
+        return -1;
+    }
     size_t s = 0;
     while (str[s] != '\0') {
         int ascii = (int)str[s];
@@ -40,22 +72,36 @@ void upper(char *str) {
         }
         s++;
     }
+    return 0;
 }
 
-void ltrim(char *str) {
+int ltrim(char *str) {
+    if (!str || len(str) <= 0) {
+        return -1;
+    }
     int l = 0;
     int r = 0;
     while (isspace(str[r])) {
         r++;
     }
     while (str[r] != '\0') {
-        str[l] = str[r];
-        l++;
-        r++;
+        str[l++] = str[r++];
     }
+    str[l] = '\0';
+    return 0;
 }
 
-// void rtrim(char *str) {}
+int rtrim(char *str) {
+    int r = len(str);
+    if (!str || r <= 0) {
+        return -1;
+    }
+    while (isspace(str[r])) {
+        r--;
+    }
+    str[r] = '\0';
+    return 0;
+}
 
 // void trim(char *str) {
 // ltrim(str);
