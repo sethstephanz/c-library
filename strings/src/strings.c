@@ -132,30 +132,30 @@ int trim(String *str) {
     return 0;
 }
 
-// void lstrip(char *str, char *delimeter) {
-// int l = 0;
-// int r = 0;
-// while () {
-// r++;
-// }
-// printf("str[r] = %c\n", str[r]);
-// while (str[r] != '\0') {
-// str[l] = str[r];
-// l++;
-// r++;
-// }
-// }
+int split(String *str, char *delimeter, String **out_arr, int *out_cnt) {
+    if (!str || !delimeter || !out_arr || !out_cnt) {
+        return -1;
+    }
 
-// void rstrip(char *str);
+    int max_tokens = 10;
+    String *results = malloc(sizeof(String) * max_tokens);
+    if (!results) {
+        return -1;
+    }
 
-// void strip(char *str) {
-// lstrip(str);
-// rstrip(str);
-// }
+    int count = 0;
+    char *start = str->data;
 
+    int str_len = len(str);
+
+    while (start != '\0' && start < str_len) {
+        }
+
+    return 0;
+}
+
+// int join(String *str, char *delimeter);
 // size_t isalpha();
 // size_t isdigit();
 // size_t find();
 // size_t replace()
-// void split();
-// void join();
