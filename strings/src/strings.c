@@ -106,6 +106,7 @@ int ltrim(String *str) {
         str_data[l++] = str_data[r++];
     }
     str_data[l] = '\0';
+    str->length = l - 1;
     return 0;
 }
 
@@ -113,15 +114,16 @@ int rtrim(String *str) {
     if (!str || len(str) < 0 || !str->data) {
         return -1;
     }
-
+    print_show_spaces(str->data);
     char *str_data = str->data;
     int r = str->length - 1;
 
     while (r >= 0 && isspace((unsigned char)str_data[r])) {
         r--;
     }
-    str_data[r + 1] = '\0';
+    str->data[r + 1] = '\0';
     str->length = r + 1;
+    print_show_spaces(str->data);
     return 0;
 }
 
@@ -133,25 +135,36 @@ int trim(String *str) {
 }
 
 int split(String *str, char *delimeter, String **out_arr, int *out_cnt) {
+    // Accepts String and returns array of Strings
     if (!str || !delimeter || !out_arr || !out_cnt) {
         return -1;
     }
 
-    int max_tokens = 10;
-    String *results = malloc(sizeof(String) * max_tokens);
-    if (!results) {
+    if (strlen(delimeter) >= strlen(str->data)) {
         return -1;
     }
 
-    int count = 0;
-    char *start = str->data;
+    char *tok = strtok(str->data, delimeter);
 
-    int str_len = len(str);
-
-    while (start != '\0' && start < str_len) {
-        }
+    printf("tok: ");
+    print_show_spaces(tok);
+    printf("\n");
 
     return 0;
+}
+
+void print_show_spaces(char *str) {
+    if (!str) {
+        return;
+    }
+    for (int i = 0; i < (int)strlen(str); i++) {
+        if (isspace(str[i])) {
+            fprintf(stderr, "#");
+        } else {
+            fprintf(stderr, "%c", str[i]);
+        }
+    }
+    fprintf(stderr, "\n");
 }
 
 // int join(String *str, char *delimeter);
