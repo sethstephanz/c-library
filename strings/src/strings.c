@@ -114,7 +114,6 @@ int rtrim(String *str) {
     if (!str || len(str) < 0 || !str->data) {
         return -1;
     }
-    print_show_spaces(str->data);
     char *str_data = str->data;
     int r = str->length - 1;
 
@@ -123,7 +122,6 @@ int rtrim(String *str) {
     }
     str->data[r + 1] = '\0';
     str->length = r + 1;
-    print_show_spaces(str->data);
     return 0;
 }
 
@@ -134,22 +132,40 @@ int trim(String *str) {
     return 0;
 }
 
-int split(String *str, char *delimeter, String **out_arr, int *out_cnt) {
-    // Accepts String and returns array of Strings
-    if (!str || !delimeter || !out_arr || !out_cnt) {
+int split(String *str, char *delimiter, String **out_arr, int *out_cnt) {
+    if (!str || !delimiter || !out_cnt || !out_arr) {
         return -1;
     }
 
-    if (strlen(delimeter) >= strlen(str->data)) {
+    int capacity = 4;
+    int count = 0;
+    String *results = malloc(capacity * sizeof(String));
+    if (!results)
         return -1;
+
+    char *tok = strtok(str->data, delimiter);
+
+    while (tok) {
+        if (count >= capacity) {
+            capacity *= 2;
+            String *tmp = realloc(results, capacity * sizeof(String));
+            if (!tmp) {
+                free(results);
+                return -1;
+            }
+            results = tmp;
+        }
+
+        results[count].data = strdup(tok);
+        printf("results.data: %s\n", results[count].data);
+        results[count].length = strlen(tok);
+        count++;
+
+        tok = strtok(NULL, delimiter);
     }
 
-    char *tok = strtok(str->data, delimeter);
-
-    printf("tok: ");
-    print_show_spaces(tok);
-    printf("\n");
-
+    *out_arr = results;
+    *out_cnt = count;
     return 0;
 }
 
