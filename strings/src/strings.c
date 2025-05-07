@@ -36,6 +36,8 @@ String *str(char *raw_str) {
     str->length = str_length;
     str->capacity = str_length + 1; // total allocated size
 
+    str->data[str_length] = '\0'; // guarantee null terminator
+
     return str;
 }
 
@@ -144,6 +146,8 @@ int split(String *to_split, char *delimiter, String **out_arr, int *out_cnt) {
     char *tok = strtok_r(to_split->data, delimiter, &saveptr);
 
     while (tok != NULL) {
+        // strtok_r adds null terminator to end of each token
+        // so fine to call str() on token
         out_arr[cnt++] = str(tok);
         tok = strtok_r(NULL, delimiter, &saveptr);
     }
