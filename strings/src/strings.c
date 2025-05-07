@@ -35,9 +35,7 @@ String *str(char *raw_str) {
     strcpy(str->data, raw_str); // copy string including null terminator
     str->length = str_length;
     str->capacity = str_length + 1; // total allocated size
-
-    str->data[str_length] = '\0'; // guarantee null terminator
-
+    str->data[str_length] = '\0';   // guarantee null terminator
     return str;
 }
 
@@ -54,7 +52,7 @@ void free_str(String *str) {
 }
 
 void print_str(String *str) {
-    printf("Array (size: %d, length: %d): ", str->capacity, str->length);
+    printf("String (size: %d, length: %d): ", str->capacity, str->length);
     for (int i = 0; i < str->capacity; i++) {
         printf("%c", str->data[i]);
     }
@@ -156,7 +154,7 @@ int split(String *to_split, char *delimiter, String **out_arr, int *out_cnt) {
     return 0;
 }
 
-void print_show_spaces(char *str) {
+void print_str_explicit(char *str) {
     if (!str) {
         return;
     }
@@ -170,6 +168,26 @@ void print_show_spaces(char *str) {
     fprintf(stderr, "\n");
 }
 
+int check_nt(String *str) {
+    if (!str || !str->data) {
+        return -1;
+    }
+
+    int str_len = len(str);
+    if (str->data[str_len + 1] != '\0') {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+// int str_get(String *str) {
+// if (!str || str->data = NULL) {
+// return -1;
+// } else {
+// return
+// }
+// }
 // int join(String *str, char *delimeter);
 // size_t isalpha();
 // size_t isdigit();

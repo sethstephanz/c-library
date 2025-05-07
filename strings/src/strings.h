@@ -35,6 +35,7 @@ int split(String *str, char *delimeter, String **out_arr, int *out_cnt);
 int join(String *str, char *delimeter); // string will be joined using token
 int reverse(String *str);               // reverses string
 
-void print_show_spaces(char *str);
+void print_str_explicit(char *str);
+int check_nt(String *str);
 
 #endif // STRINGS_H
