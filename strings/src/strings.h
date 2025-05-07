@@ -30,6 +30,7 @@ bool is_alpha(String *str);                                        // detect if 
 bool is_digit(String *str);                                        // detect if all chars in string are digits 0-9
 size_t find(String *str, char *to_find);                           // find first instance (idx) of character
 size_t replace(String *str, char *to_replace, char *replace_with); // replace first instance of character in string
+size_t replace_all(String *str, char *to_replace, char *replace_with);
 int split(String *str, char *delimeter, String **out_arr, int *out_cnt);
 int join(String *str, char *delimeter); // string will be joined using token
 int reverse(String *str);               // reverses string

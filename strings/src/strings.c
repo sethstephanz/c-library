@@ -132,40 +132,23 @@ int trim(String *str) {
     return 0;
 }
 
-int split(String *str, char *delimiter, String **out_arr, int *out_cnt) {
-    if (!str || !delimiter || !out_cnt || !out_arr) {
+int split(String *to_split, char *delimiter, String **out_arr, int *out_cnt) {
+    // Takes in string struct, tokenizes data, converts
+    // tokens to Strings, returns array of String pointers
+    if (!to_split || !delimiter || !out_cnt || !out_arr) {
         return -1;
     }
 
-    int capacity = 4;
-    int count = 0;
-    String *results = malloc(capacity * sizeof(String));
-    if (!results)
-        return -1;
+    int cnt = 0;
+    char *saveptr;
+    char *tok = strtok_r(to_split->data, delimiter, &saveptr);
 
-    char *tok = strtok(str->data, delimiter);
-
-    while (tok) {
-        if (count >= capacity) {
-            capacity *= 2;
-            String *tmp = realloc(results, capacity * sizeof(String));
-            if (!tmp) {
-                free(results);
-                return -1;
-            }
-            results = tmp;
-        }
-
-        results[count].data = strdup(tok);
-        printf("results.data: %s\n", results[count].data);
-        results[count].length = strlen(tok);
-        count++;
-
-        tok = strtok(NULL, delimiter);
+    while (tok != NULL) {
+        out_arr[cnt++] = str(tok);
+        tok = strtok_r(NULL, delimiter, &saveptr);
     }
 
-    *out_arr = results;
-    *out_cnt = count;
+    *out_cnt = cnt;
     return 0;
 }
 
@@ -187,4 +170,5 @@ void print_show_spaces(char *str) {
 // size_t isalpha();
 // size_t isdigit();
 // size_t find();
-// size_t replace()
+// size_t replace();
+// size_t replace_all();
