@@ -37,5 +37,6 @@ int reverse(String *str);               // reverses string
 
 void print_str_explicit(char *str);
 int check_nt(String *str);
+int reverse(String *str);
 
 #endif // STRINGS_H

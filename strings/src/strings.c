@@ -155,6 +155,8 @@ int split(String *to_split, char *delimiter, String **out_arr, int *out_cnt) {
 }
 
 void print_str_explicit(char *str) {
+    // Prints string with spaces replaced with characters
+    // so can visually inspect them
     if (!str) {
         return;
     }
@@ -169,6 +171,7 @@ void print_str_explicit(char *str) {
 }
 
 int check_nt(String *str) {
+    // Checks that end of string is null terminated
     if (!str || !str->data) {
         return -1;
     }
@@ -181,14 +184,23 @@ int check_nt(String *str) {
     }
 }
 
-// int str_get(String *str) {
-// if (!str || str->data = NULL) {
-// return -1;
-// } else {
-// return
-// }
-// }
 // int join(String *str, char *delimeter);
+int reverse(String *str) {
+    if (!str || !str->data) {
+        return -1;
+    }
+    int l = 0;
+    int r = len(str);
+
+    while (l <= r) {
+        char temp = str->data[l];
+        str->data[l] = str->data[r];
+        str->data[r] = temp;
+        l++;
+        r--;
+    }
+}
+
 // size_t isalpha();
 // size_t isdigit();
 // size_t find();
