@@ -39,7 +39,7 @@ String *str(char *raw_str) {
     return str;
 }
 
-int len(String *str) {
+size_t len(String *str) {
     if (!str) {
         return -1;
     }
@@ -184,7 +184,6 @@ int check_nt(String *str) {
     }
 }
 
-// int join(String *str, char *delimeter);
 int reverse(String *str) {
     if (!str || !str->data) {
         return -1;
@@ -199,6 +198,45 @@ int reverse(String *str) {
         l++;
         r--;
     }
+    return 0;
+}
+
+int join(String **to_join, char *delimeter, String *out_str, int arr_size) {
+    // take in array of Strings
+    // copy all Strings' data to a big buffer, nt at end
+    // wrap the buffer and return
+    // final buffer size will be len of strings to join + (length of delimeter * number of strings - 1)
+
+    if (!to_join || !delimeter || arr_size <= 0 || !out_str) {
+        fprintf(stderr, "join1\n");
+        return -1;
+    }
+
+    fprintf(stderr, "join\n");
+    size_t del_len = (size_t)strlen(delimeter);
+    size_t total_len = 0;
+
+    for (int i = 0; i < arr_size; i++) {
+        total_len += len(to_join[i]);
+        if (i < arr_size - 1) {
+            total_len += del_len;
+        }
+    }
+
+    char *buffer = malloc(total_len + 1);
+    if (!buffer) {
+        return -1;
+    }
+
+    buffer[0] = '\0';
+
+    for (int i = 0; i < arr_size; i++) {
+        strcat(buffer, to_join[i]->data);
+    }
+
+    out_str = str(buffer);
+    free(buffer);
+    return 0;
 }
 
 // size_t isalpha();
