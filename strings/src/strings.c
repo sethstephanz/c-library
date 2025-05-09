@@ -201,41 +201,47 @@ int reverse(String *str) {
     return 0;
 }
 
-int join(String **to_join, char *delimeter, String *out_str, int arr_size) {
-    // take in array of Strings
-    // copy all Strings' data to a big buffer, nt at end
-    // wrap the buffer and return
-    // final buffer size will be len of strings to join + (length of delimeter * number of strings - 1)
-
-    if (!to_join || !delimeter || arr_size <= 0 || !out_str) {
-        fprintf(stderr, "join1\n");
+int join(String **to_join, char *delimiter, String **out_str, int arr_size) {
+    if (!to_join || !delimiter || arr_size <= 0 || !out_str) {
         return -1;
     }
 
-    fprintf(stderr, "join\n");
-    size_t del_len = (size_t)strlen(delimeter);
-    size_t total_len = 0;
+    size_t del_len = strlen(delimiter);
+    size_t raw_str_len = 0;
 
     for (int i = 0; i < arr_size; i++) {
-        total_len += len(to_join[i]);
+        raw_str_len += len(to_join[i]);
         if (i < arr_size - 1) {
-            total_len += del_len;
+            raw_str_len += del_len;
         }
     }
 
-    char *buffer = malloc(total_len + 1);
+    char *buffer = malloc(raw_str_len + 1); // +1 for null terminator
     if (!buffer) {
         return -1;
     }
 
-    buffer[0] = '\0';
-
+    size_t b = 0;
     for (int i = 0; i < arr_size; i++) {
-        strcat(buffer, to_join[i]->data);
+        for (size_t j = 0; j <= len(to_join[i]); j++) {
+            buffer[b++] = to_join[i]->data[j];
+        }
+        if (i < arr_size - 1) {
+            for (size_t d = 0; d < del_len; d++) {
+                buffer[b++] = delimiter[d];
+            }
+        }
     }
 
-    out_str = str(buffer);
+    buffer[b] = '\0'; // Null-terminate
+
+    fprintf(stderr, "buffer: %s\n", buffer);
+
+    *out_str = str(buffer); // Store in caller's pointer
+    fprintf(stderr, "Inside join: ");
+    print_str(*out_str);
     free(buffer);
+
     return 0;
 }
 

@@ -34,7 +34,7 @@ size_t find(String *str, char *to_find);                           // find first
 size_t replace(String *str, char *to_replace, char *replace_with); // replace first instance of character in string
 size_t replace_all(String *str, char *to_replace, char *replace_with);
 int split(String *str, char *delimeter, String **out_arr, int *out_cnt);
-int reverse(String *str);                                                   // reverses string
-int join(String **to_join, char *delimeter, String *out_str, int arr_size); // join array of Strings by delimeter. return single String
-
+int reverse(String *str); // reverses string
+// int join(String **to_join, char *delimeter, String *out_str, int arr_size); // join array of Strings by delimeter. return single String
+int join(String **to_join, char *delimiter, String **out_str, int arr_size);
 #endif // STRINGS_H
