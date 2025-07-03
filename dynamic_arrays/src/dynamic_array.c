@@ -4,16 +4,16 @@
 
 // Dynamic array that doubles in size if more elements are added.
 
-DynamicArray *create_array(int initial_length) {
+DynamicArray *create_arr(int initial_length) {
     DynamicArray *arr = (DynamicArray *)malloc(sizeof(DynamicArray));
     if (!arr) {
-        fprintf(stderr, "create_array: Failed to allocate memory for array\n");
+        fprintf(stderr, "create_arr: Failed to allocate memory for array\n");
         exit(EXIT_FAILURE);
     }
 
     arr->data = (int *)malloc(initial_length * sizeof(int)); // this cast is unecessary in C, but is in C++
     if (!arr->data) {
-        fprintf(stderr, "create_array: Failed to allocate memory for data\n");
+        fprintf(stderr, "create_arr: Failed to allocate memory for data\n");
         free(arr);
         exit(EXIT_FAILURE);
     }
@@ -23,23 +23,23 @@ DynamicArray *create_array(int initial_length) {
     return arr;
 }
 
-void resize_array(DynamicArray *arr) {
+void resize_arr(DynamicArray *arr) {
     arr->length *= 2;
     arr->data = (int *)realloc(arr->data, arr->length * sizeof(int));
     if (!arr->data) {
-        fprintf(stderr, "resize_array: Failed to reallocate memory for data\n");
+        fprintf(stderr, "resize_arr: Failed to reallocate memory for data\n");
         exit(EXIT_FAILURE);
     }
 }
 
-void free_array(DynamicArray *arr) {
+void free_arr(DynamicArray *arr) {
     free(arr->data);
     free(arr);
 }
 
-void print_array(DynamicArray *arr) {
+void print_arr(DynamicArray *arr) {
     printf("Array (size: %d, length: %d): ", arr->size, arr->length);
-    for (int i = 0; i < arr->size; i++) {
+    for (int i = 0; i <= arr->size; i++) {
         printf("%d ", arr->data[i]);
     }
     printf("\n");
@@ -47,7 +47,7 @@ void print_array(DynamicArray *arr) {
 
 void append(DynamicArray *arr, int val) {
     if (arr->size >= arr->length) {
-        resize_array(arr);
+        resize_arr(arr);
     }
 
     // add element and increase size
@@ -55,8 +55,13 @@ void append(DynamicArray *arr, int val) {
 }
 
 void insert(DynamicArray *arr, int val, int idx) {
+    if (idx < 0 || idx >= arr->length) {
+        printf("insert: Invalid index\n");
+    }
+    // idx is valid
+    arr->size++;
     if (arr->size == arr->length) {
-        resize_array(arr);
+        resize_arr(arr);
     }
     if (idx >= 0 && idx < arr->length) {
         // shift over elements from size of array + 1 to idx
@@ -64,12 +69,8 @@ void insert(DynamicArray *arr, int val, int idx) {
         for (i = arr->length; i > idx; i--) {
             arr->data[i] = arr->data[i - 1];
         }
-
         // insert el at idx
         arr->data[idx] = val;
-        arr->size++;
-    } else {
-        printf("Insert: Invalid index\n");
     }
 }
 
