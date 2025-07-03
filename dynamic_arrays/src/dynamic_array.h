@@ -9,10 +9,10 @@ typedef struct
 } DynamicArray;
 
 // init & utility functions
-DynamicArray *create_array(int initial_length); // initialize dynamic array
-void free_array(DynamicArray *arr);             // free memory allocated for array
-void print_array(DynamicArray *arr);            // print contents from array
-void resize_array(DynamicArray *arr);           // doubles size of array if run out of room
+DynamicArray *create_arr(int initial_length); // initialize dynamic array
+void free_arr(DynamicArray *arr);             // free memory allocated for array
+void print_arr(DynamicArray *arr);            // print contents from array
+void resize_arr(DynamicArray *arr);           // doubles size of array if run out of room
 
 // methods
 void append(DynamicArray *arr, int val);          // append element to dynamic array
