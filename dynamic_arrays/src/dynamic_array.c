@@ -175,7 +175,7 @@ int sum(DynamicArray *arr, int *res) {
     return 0;
 }
 
-void reverse(DynamicArray *arr) {
+void reverse_arr(DynamicArray *arr) {
     int i = 0;
     int j = arr->size - 1;
     while (i < j) {

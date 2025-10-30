@@ -25,7 +25,7 @@ int avg(DynamicArray *arr, float *res);           // return average of values in
 int max(DynamicArray *arr, int *res);             // return maximum value in array
 int min(DynamicArray *arr, int *res);             // return minimum value in array
 int sum(DynamicArray *arr, int *res);             // return sum of values in array
-void reverse(DynamicArray *arr);                  // reverse array
+void reverse_arr(DynamicArray *arr);              // reverse array
 void shift_left(DynamicArray *arr);               // shift elements in array left (leftmost will be lost)
 void rotate_left(DynamicArray *arr);              // shift elements in array left (leftmost inserted at end)
 void shift_right(DynamicArray *arr);              // shift elements right (rightmost will be lost)

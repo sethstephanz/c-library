@@ -184,7 +184,7 @@ int check_nt(String *str) {
     }
 }
 
-int reverse(String *str) {
+int reverse_str(String *str) {
     if (!str || !str->data) {
         return -1;
     }
